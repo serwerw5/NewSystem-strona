@@ -156,7 +156,6 @@
     .message.user { background: var(--chat-msg-user); color: white; align-self: flex-end; border-bottom-right-radius: 4px; }
     .message img { max-width: 100%; border-radius: 8px; margin-top: 5px; display: block; }
 
-    /* Box zytania o zakończeniu */
     .finish-box {
       background: #f59e0b22; border: 1px solid #f59e0b; border-radius: 10px;
       padding: 12px; text-align: center; margin: 10px 0; align-self: center; width: 90%;
@@ -338,18 +337,14 @@
     <span class="admin-link" id="open-admin">Logowanie - Admin</span>
   </div>
 
-  <!-- MODAL ADMINA -->
+  <!-- MODAL ADMINA (USUNIĘTE POLE NAZWA) -->
   <div class="modal-overlay" id="admin-modal">
     <div class="modal-card">
       <button class="close-btn" id="close-admin">&times;</button>
       <h2 class="modal-title">Panel Admina</h2>
       <form id="login-form">
         <div class="form-group">
-          <label for="admin-name">Nazwa (opcjonalnie)</label>
-          <input type="text" id="admin-name" placeholder="Wpisz cokolwiek lub zostaw puste">
-        </div>
-        <div class="form-group">
-          <label for="admin-code">Kod</label>
+          <label for="admin-code">Kod Admina</label>
           <input type="password" id="admin-code" placeholder="Wpisz kod..." required>
         </div>
         <button type="submit" class="btn-submit">Zaloguj</button>
@@ -433,7 +428,6 @@
       return "";
     }
 
-    // Pobieranie danych z LocalStorage (by syncowało na żywo w oknach)
     function getOrders() {
       return JSON.parse(localStorage.getItem('clientOrders') || '[]');
     }
@@ -459,7 +453,6 @@
       renderClientMessages();
     };
 
-    // Nasłuchiwanie zmian na żywo w innych kartach/oknach
     window.addEventListener('storage', () => {
       renderClientMessages();
       if (document.getElementById('admin-panel-view').style.display === 'flex') {
@@ -517,7 +510,7 @@
         return;
       }
 
-      order.messages.forEach((msg, idx) => {
+      order.messages.forEach((msg) => {
         const m = document.createElement('div');
         m.className = `message ${msg.sender === 'user' ? 'user' : 'bot'}`;
         if(msg.image) {
@@ -528,7 +521,6 @@
         chatMessages.appendChild(m);
       });
 
-      // Jeśli admin zapytaj o zakończenie
       if(order.pendingFinish) {
         const fBox = document.createElement('div');
         fBox.className = 'finish-box';
@@ -553,7 +545,6 @@
       order.messages.push({ sender: 'user', text: text });
       chatInput.value = '';
 
-      // Odpowiedź automatyczna po pierwszej wiadomości
       if(order.messages.filter(m => m.sender === 'user').length === 1) {
         setTimeout(() => {
           let updatedOrders = getOrders();
@@ -585,8 +576,12 @@
             saveOrders(orders);
           }
         } else if (role === 'admin' && selectedUserForChat !== null) {
-          orders[selectedUserForChat].messages.push({ sender: 'admin', image: base64Img });
-          saveOrders(orders);
+          let activeOrders = orders.filter(o => o.status !== 'closed');
+          let targetOrder = activeOrders[selectedUserForChat];
+          if(targetOrder) {
+            targetOrder.messages.push({ sender: 'admin', image: base64Img });
+            saveOrders(orders);
+          }
         }
       };
       reader.readAsDataURL(file);
@@ -608,7 +603,6 @@
       if (e.key === 'Enter') sendMessage();
     }
 
-    // Motyw
     const toggleSwitch = document.getElementById('theme-toggle');
     if (localStorage.getItem('theme') === 'light') {
       document.body.classList.add('light-mode');
@@ -624,7 +618,6 @@
       }
     });
 
-    // Panel Admin Logowanie
     const adminLink = document.getElementById('open-admin');
     const adminModal = document.getElementById('admin-modal');
     const closeBtn = document.getElementById('close-admin');

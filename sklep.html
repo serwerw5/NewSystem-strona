@@ -2,276 +2,64 @@
 <html lang="pl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Zamów miniatury</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zamów Miniaturkę</title>
   <style>
-    :root {
-      --bg-color: #0f172a;
-      --card-bg: #1e293b;
-      --card-border: #334155;
-      --text-main: #f8fafc;
-      --text-sub: #94a3b8;
-      --input-bg: #0f172a;
-      --chat-msg-bot: #334155;
-      --chat-msg-user: #2563eb;
-    }
-
-    body.light-mode {
-      --bg-color: #f1f5f9;
-      --card-bg: #ffffff;
-      --card-border: #cbd5e1;
-      --text-main: #0f172a;
-      --text-sub: #64748b;
-      --input-bg: #f1f5f9;
-      --chat-msg-bot: #e2e8f0;
-      --chat-msg-user: #3b82f6;
-    }
-
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-
-    body {
-      background-color: var(--bg-color);
-      color: var(--text-main);
-      min-height: 100vh;
-      padding: 15px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      position: relative;
-      transition: background-color 0.3s ease, color 0.3s ease;
-      overflow-x: hidden;
-    }
-
-    .theme-toggle-container {
-      position: fixed; top: 15px; right: 15px;
-      display: flex; align-items: center; gap: 8px; z-index: 999;
-    }
-    .switch { position: relative; display: inline-block; width: 48px; height: 28px; }
-    .switch input { opacity: 0; width: 0; height: 0; }
-    .slider {
-      position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
-      background-color: #334155; transition: background-color 0.3s ease; border-radius: 30px;
-    }
-    .slider:before {
-      position: absolute; content: ""; height: 22px; width: 22px; left: 3px; bottom: 3px;
-      background-color: #007aff; box-shadow: 0px 2px 5px rgba(0,0,0,0.2);
-      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); border-radius: 50%;
-    }
-    input:checked + .slider { background-color: #e2e8f0; }
-    input:checked + .slider:before { transform: translateX(20px); background-color: #38bdf8; }
-
-    #selection-view { width: 100%; display: flex; flex-direction: column; align-items: center; }
-    .top-bar { width: 100%; max-width: 1100px; margin-bottom: 25px; padding-top: 5px; }
-    .home-link { color: var(--text-sub); text-decoration: none; font-weight: 600; font-size: 0.95rem; }
-    .home-link:hover { color: #38bdf8; }
-    .header-section { text-align: center; margin-bottom: 30px; }
-    .sub-title { font-size: clamp(1.8rem, 4vw, 2.2rem); font-weight: 700; }
-    .question { color: var(--text-sub); font-size: clamp(1rem, 2.5vw, 1.2rem); margin-top: 6px; }
-
-    .options-grid {
-      display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;
-      max-width: 1100px; width: 100%; margin: 0 auto 40px auto;
-    }
-
-    .card {
-      background: var(--card-bg); border: 2px solid var(--card-border);
-      border-radius: 20px; padding: 25px; width: 100%; max-width: 280px;
-      text-align: center; cursor: pointer; transition: all 0.3s ease;
-      display: flex; flex-direction: column; align-items: center; height: 230px;
-    }
-    .card:hover { transform: translateY(-6px); border-color: #38bdf8; box-shadow: 0 12px 30px rgba(56, 189, 248, 0.25); }
-
-    .icon-box { height: 90px; display: flex; align-items: center; justify-content: center; margin-bottom: 15px; position: relative; width: 100%; }
-    .thumb-icon {
-      width: 70px; height: 45px; background: linear-gradient(135deg, #ff416c, #ff4b2b);
-      border-radius: 8px; border: 2px solid #ffffff; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-      display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: bold; color: #ffffff;
-    }
-    .thumb-icon-small { width: 48px; height: 30px; font-size: 10px; }
-    .stack { position: relative; }
-    .stack .thumb-icon { position: absolute; }
-    .stack-2 .t1 { transform: translateX(-15px) rotate(-6deg); }
-    .stack-2 .t2 { transform: translateX(15px) rotate(6deg); }
-    .stack-5 .t1 { transform: translateX(-28px) rotate(-12deg); }
-    .stack-5 .t2 { transform: translateX(-14px) rotate(-6deg); }
-    .stack-5 .t3 { transform: translateX(0deg) rotate(0deg); z-index: 2; }
-    .stack-5 .t4 { transform: translateX(14px) rotate(6deg); z-index: 1; }
-    .stack-5 .t5 { transform: translateX(28px) rotate(12deg); }
-    .card-title { font-size: 1.2rem; font-weight: 600; margin-top: auto; }
-
-    .note-wrapper { position: relative; max-width: 850px; width: 100%; margin: 10px auto 30px auto; transform: rotate(-0.5deg); }
-    .pushpin {
-      position: absolute; top: -10px; left: 20px; width: 26px; height: 26px;
-      background: radial-gradient(circle at 35% 35%, #ff4d4d, #cc0000); border-radius: 50%;
-      box-shadow: 3px 5px 8px rgba(0, 0, 0, 0.4); z-index: 10;
-    }
-    .notebook-paper {
-      background-color: #fefcf3; color: #1e293b; padding: 30px 20px 25px 20px; border-radius: 2px;
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
-      mask-image: radial-gradient(circle at 10px 0, transparent 5px, black 6px);
-      mask-size: 18px 100%; mask-repeat: repeat-x;
-      -webkit-mask-image: radial-gradient(circle at 10px 0, transparent 5px, black 6px);
-      -webkit-mask-size: 18px 100%; -webkit-mask-repeat: repeat-x;
-    }
-    .paper-title { font-family: 'Comic Sans MS', cursive, sans-serif; text-align: center; font-size: clamp(1.5rem, 3.5vw, 2rem); margin-bottom: 20px; border-bottom: 2px dashed #cbd5e1; padding-bottom: 8px; }
-    .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; text-align: center; }
-    .pricing-item { display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 10px; }
-    .price-text { font-size: clamp(1.05rem, 2.5vw, 1.2rem); font-weight: 700; color: #0f172a; }
-    .price-subtext { font-size: 0.9rem; color: #ef4444; font-weight: 600; }
-    .price-formula { font-size: 0.95rem; font-weight: 600; color: #3b82f6; }
-
-    #chat-view {
-      display: none; width: 100%; max-width: 800px; margin: 20px auto; flex-direction: column;
-      height: 80vh; background: var(--card-bg); border: 1px solid var(--card-border);
-      border-radius: 20px; overflow: hidden; box-shadow: 0 15px 30px rgba(0,0,0,0.3);
-    }
-    .chat-header { padding: 15px 20px; background: var(--input-bg); border-bottom: 1px solid var(--card-border); display: flex; align-items: center; justify-content: space-between; }
-    .back-btn { background: transparent; border: none; color: var(--text-sub); font-size: 0.95rem; font-weight: 600; cursor: pointer; }
-    .back-btn:hover { color: #38bdf8; }
-    .chat-title-container { text-align: center; }
-    .chat-title { font-size: 1.1rem; font-weight: 700; }
-    .chat-status { font-size: 0.8rem; color: #10b981; }
-
-    .username-bar {
-      padding: 10px 15px; background: #2563eb15; border-bottom: 1px solid var(--card-border);
-      display: flex; gap: 10px; align-items: center; justify-content: center; font-size: 0.85rem;
-    }
-    .username-bar input {
-      padding: 6px 12px; border-radius: 6px; border: 1px solid var(--card-border);
-      background: var(--input-bg); color: var(--text-main); outline: none;
-    }
-    .username-bar button {
-      padding: 6px 12px; background: #2563eb; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;
-    }
-
-    .chat-messages { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; }
-    .message { max-width: 75%; padding: 12px 16px; border-radius: 15px; font-size: 0.95rem; line-height: 1.4; word-break: break-word; }
-    .message.bot { background: var(--chat-msg-bot); align-self: flex-start; border-bottom-left-radius: 4px; }
-    .message.user { background: var(--chat-msg-user); color: white; align-self: flex-end; border-bottom-right-radius: 4px; }
-    .message img { max-width: 100%; border-radius: 8px; margin-top: 5px; display: block; }
-
-    .finish-box {
-      background: #f59e0b22; border: 1px solid #f59e0b; border-radius: 10px;
-      padding: 12px; text-align: center; margin: 10px 0; align-self: center; width: 90%;
-    }
-    .finish-btn {
-      background: #10b981; color: white; border: none; padding: 8px 16px;
-      border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 8px;
-    }
-
-    .chat-input-area { padding: 15px; background: var(--input-bg); border-top: 1px solid var(--card-border); display: flex; gap: 10px; align-items: center; }
-    .chat-input { flex: 1; padding: 12px 18px; border-radius: 25px; border: 1px solid var(--card-border); background: var(--card-bg); color: var(--text-main); font-size: 0.95rem; outline: none; }
-    .chat-input::placeholder { color: #94a3b8; }
-    
-    .btn-action {
-      background: #3b82f6; color: white; border: none; width: 42px; height: 42px;
-      border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.1rem;
-    }
+    body { background-color: #0f172a; color: #f8fafc; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
+    .form-card { background: #1e293b; border: 1px solid #334155; border-radius: 16px; padding: 25px; width: 100%; max-width: 480px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
+    h2 { margin-bottom: 8px; text-align: center; color: #38bdf8; }
+    p.sub { color: #94a3b8; font-size: 0.9rem; text-align: center; margin-bottom: 20px; }
+    .form-group { margin-bottom: 15px; }
+    label { display: block; font-size: 0.85rem; color: #94a3b8; margin-bottom: 6px; }
+    input[type="text"], input[type="email"], select, textarea { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #334155; background: #0f172a; color: #f8fafc; outline: none; font-size: 0.95rem; }
+    input[type="file"] { width: 100%; padding: 8px; border-radius: 8px; border: 1px dashed #334155; background: #0f172a; color: #94a3b8; font-size: 0.85rem; cursor: pointer; }
+    textarea { resize: vertical; min-height: 100px; }
+    button { width: 100%; background: #2563eb; color: white; border: none; padding: 12px; border-radius: 8px; font-weight: bold; font-size: 1rem; cursor: pointer; transition: background 0.2s; margin-top: 10px; }
+    button:hover { background: #1d4ed8; }
   </style>
 </head>
 <body>
 
-  <div class="theme-toggle-container">
-    <span class="icon">🌙</span>
-    <label class="switch">
-      <input type="checkbox" id="theme-toggle">
-      <span class="slider"></span>
-    </label>
-    <span class="icon">☀️</span>
+  <div class="form-card">
+    <h2>Formularz Zamówienia</h2>
+    <p class="sub">Wypełnij formularz – wiadomość trafi bezpośrednio na mój telefon.</p>
+
+    <!-- Zintegrowany Formspree wysyłający na serwerw45@proton.me -->
+    <form action="https://formspree.io/f/serwerw45@proton.me" method="POST" enctype="multipart/form-data">
+      
+      <div class="form-group">
+        <label for="nickname">Twoja nazwa / Nick Discord:</label>
+        <input type="text" id="nickname" name="Nick_Klienta" placeholder="np. JanKowalski#1234" required>
+      </div>
+
+      <div class="form-group">
+        <label for="package">Wybierz pakiet:</label>
+        <select id="package" name="Pakiet">
+          <option value="1 miniatura (15 zł)">1 miniatura - 15 zł</option>
+          <option value="2 miniatury (20 zł)">2 miniatury - 20 zł</option>
+          <option value="Niestandardowa ilość">Niestandardowa ilość</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="description">Opisz swój pomysł i styl miniatury:</label>
+        <textarea id="description" name="Opis_Zamowienia" placeholder="Opisz jak najdokładniej o czym ma być film, jakie napisy umieścić..." required></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="file">Dodaj materiały / podgląd (opcjonalnie):</label>
+        <input type="file" id="file" name="Zalacznik">
+      </div>
+
+      <div class="form-group">
+        <label for="contact">Twój e-mail do kontaktu z Tobą:</label>
+        <input type="email" id="contact" name="Email_Klienta" placeholder="twoj@email.com" required>
+      </div>
+
+      <button type="submit">Wyślij zamówienie</button>
+    </form>
   </div>
 
-  <div id="selection-view">
-    <div class="top-bar">
-      <a href="sklep.html" class="home-link">&larr; Strona Główna</a>
-    </div>
-
-    <div class="header-section">
-      <h1 class="sub-title">Zamów</h1>
-      <p class="question">Ile miniatur chcesz zamówić?</p>
-    </div>
-
-    <div class="options-grid">
-      <div class="card" onclick="openChat('1 miniatura')">
-        <div class="icon-box"><div class="thumb-icon">YT</div></div>
-        <div class="card-title">1 miniatura</div>
-      </div>
-
-      <div class="card" onclick="openChat('2 miniatury')">
-        <div class="icon-box stack stack-2">
-          <div class="thumb-icon t1">YT</div>
-          <div class="thumb-icon t2">YT</div>
-        </div>
-        <div class="card-title">2 miniatury</div>
-      </div>
-
-      <div class="card" onclick="openChat('Niestandardowa ilość')">
-        <div class="icon-box stack stack-5">
-          <div class="thumb-icon t1">YT</div><div class="thumb-icon t2">YT</div>
-          <div class="thumb-icon t3">YT</div><div class="thumb-icon t4">YT</div>
-          <div class="thumb-icon t5">YT</div>
-        </div>
-        <div class="card-title">Niestandardowa ilość</div>
-      </div>
-    </div>
-
-    <div class="note-wrapper">
-      <div class="pushpin"></div>
-      <div class="notebook-paper">
-        <h2 class="paper-title">Cennik</h2>
-        <div class="pricing-grid">
-          <div class="pricing-item">
-            <div class="thumb-icon thumb-icon-small">YT</div>
-            <div class="price-text">1 miniatura 15 zł</div>
-          </div>
-          <div class="pricing-item">
-            <div class="icon-box stack stack-2" style="height: 35px;">
-              <div class="thumb-icon thumb-icon-small t1">YT</div>
-              <div class="thumb-icon thumb-icon-small t2">YT</div>
-            </div>
-            <div class="price-text">2 miniatury 20 zł</div>
-            <div class="price-subtext">(rabat)</div>
-          </div>
-          <div class="pricing-item">
-            <div class="icon-box stack stack-5" style="height: 35px;">
-              <div class="thumb-icon thumb-icon-small t1">YT</div><div class="thumb-icon thumb-icon-small t2">YT</div>
-              <div class="thumb-icon thumb-icon-small t3">YT</div><div class="thumb-icon thumb-icon-small t4">YT</div>
-              <div class="thumb-icon thumb-icon-small t5">YT</div>
-            </div>
-            <div class="price-text">Niestandardowa ilość</div>
-            <div class="price-formula">(ilość miniatur) × 15 zł = cena</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- CZAT KLIENTA -->
-  <div id="chat-view">
-    <div class="chat-header">
-      <button class="back-btn" onclick="closeChat()">&larr; Wróć do wyboru</button>
-      <div class="chat-title-container">
-        <div class="chat-title" id="selected-package-title">Zamówienie</div>
-        <div class="chat-status">● Dostępny</div>
-      </div>
-      <div style="width: 80px;"></div>
-    </div>
-
-    <div class="username-bar">
-      <span>Twoja nazwa:</span>
-      <input type="text" id="username-input" placeholder="Wpisz swoją nazwę...">
-      <button onclick="saveUsername()">Zatwierdź</button>
-    </div>
-
-    <div class="chat-messages" id="chat-messages"></div>
-
-    <div class="chat-input-area">
-      <input type="file" id="client-file" accept="image/*" style="display:none" onchange="sendImage(this, 'user')">
-      <button class="btn-action" onclick="document.getElementById('client-file').click()">📷</button>
-      <input type="text" id="chat-input" class="chat-input" placeholder="Podaj styl i pomysł ..." onkeypress="handleKeyPress(event)">
-      <button class="btn-action" onclick="sendMessage()">&#10148;</button>
-    </div>
-  </div>
-
-  <script src="sklep.js"></script>
 </body>
 </html>

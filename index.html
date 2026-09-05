@@ -3,212 +3,183 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NEW SYSTEM — Official Ecosystem</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <title>NEW SYSTEM os8</title>
     <style>
-        :root {
-            --bg: #0a0c10;
-            --card-bg: rgba(255, 255, 255, 0.03);
-            --card-border: rgba(255, 255, 255, 0.08);
-            --primary: #3b82f6;
-            --primary-glow: rgba(59, 130, 246, 0.35);
-            --accent: #60a5fa;
-            --text-main: #f3f4f6;
-            --text-muted: #9ca3af;
-        }
-
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Inter', sans-serif;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
 
         body {
-            background-color: var(--bg);
-            color: var(--text-main);
+            background-color: #0b0e14;
+            background-image: 
+                radial-gradient(circle at 50% 0%, #1a233d 0%, transparent 60%),
+                radial-gradient(circle at 50% 100%, #111827 0%, transparent 50%);
+            color: #ffffff;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            justify-content: space-between;
             align-items: center;
-            overflow-x: hidden;
-            background-image: 
-                radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(37, 99, 235, 0.08) 0%, transparent 40%);
+            padding: 20px;
         }
 
-        /* --- HEADER --- */
+        /* Header Nav */
         header {
             width: 100%;
-            max-width: 1200px;
-            padding: 40px 20px;
+            max-width: 1100px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding: 20px 0;
         }
 
         .logo {
+            font-size: 16px;
             font-weight: 800;
-            font-size: 1.4rem;
             letter-spacing: 2px;
-            background: linear-gradient(135deg, #fff 0%, #94a3b8 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: #ffffff;
+            text-transform: uppercase;
         }
 
-        .badge {
-            background: rgba(59, 130, 246, 0.1);
-            border: 1px solid rgba(59, 130, 246, 0.3);
-            color: var(--accent);
+        .badge-top {
+            background-color: rgba(30, 41, 59, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #60a5fa;
             padding: 6px 16px;
             border-radius: 20px;
-            font-size: 0.8rem;
+            font-size: 12px;
             font-weight: 600;
             letter-spacing: 1px;
         }
 
-        /* --- HERO --- */
+        /* Hero Section */
         .hero {
             text-align: center;
-            margin: 40px 20px 60px;
+            margin-top: 20px;
+            margin-bottom: 40px;
             max-width: 700px;
         }
 
         .hero h1 {
-            font-size: 3rem;
+            font-size: 42px;
             font-weight: 800;
             margin-bottom: 16px;
-            line-height: 1.2;
-            letter-spacing: -1px;
+            letter-spacing: -0.5px;
         }
 
         .hero p {
-            color: var(--text-muted);
-            font-size: 1.1rem;
+            color: #94a3b8;
+            font-size: 15px;
             line-height: 1.6;
         }
 
-        /* --- PRODUCTS GRID --- */
-        .container {
+        /* Cards Grid */
+        .cards-container {
+            display: flex;
+            gap: 24px;
+            justify-content: center;
+            flex-wrap: wrap;
             width: 100%;
-            max-width: 1000px;
-            padding: 0 20px 80px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 30px;
+            max-width: 900px;
+            margin-bottom: 40px;
         }
 
-        /* --- PRODUCT CARD WITH HOVER ANIMATION --- */
         .card {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 24px;
-            padding: 32px;
-            backdrop-filter: blur(12px);
+            background: rgba(18, 24, 38, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 28px;
+            width: 380px;
+            backdrop-filter: blur(10px);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            position: relative;
-            /* Płynna animacja podnoszenia */
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
-                        box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-                        border-color 0.4s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.2s, border-color 0.2s;
         }
 
-        /* Efekt podniesienia i światła po najechaniu */
         .card:hover {
-            transform: translateY(-10px);
-            border-color: rgba(59, 130, 246, 0.4);
-            box-shadow: 0 20px 40px -15px var(--primary-glow);
+            border-color: rgba(255, 255, 255, 0.18);
+            transform: translateY(-2px);
         }
 
         .card-icon {
-            width: 56px;
-            height: 56px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
+            width: 42px;
+            height: 42px;
+            background: rgba(30, 41, 59, 0.8);
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
+            font-size: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        .card h2 {
-            font-size: 1.4rem;
-            font-weight: 600;
+        .card-title {
+            font-size: 20px;
+            font-weight: 700;
             margin-bottom: 10px;
+            color: #ffffff;
         }
 
-        .card p {
-            color: var(--text-muted);
-            font-size: 0.95rem;
+        .card-desc {
+            color: #94a3b8;
+            font-size: 13px;
             line-height: 1.5;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
+            min-height: 58px;
         }
 
         .card-meta {
-            font-size: 0.8rem;
-            color: rgba(255, 255, 255, 0.4);
+            color: #64748b;
+            font-size: 12px;
             margin-bottom: 20px;
             display: flex;
             gap: 12px;
         }
 
-        /* Buttons & Import Area */
-        .btn {
+        .btn-download {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
             width: 100%;
-            padding: 14px;
-            border-radius: 12px;
-            border: none;
-            background: var(--primary);
-            color: white;
-            font-weight: 600;
-            font-size: 0.95rem;
-            cursor: pointer;
-            transition: background 0.2s ease, opacity 0.2s ease;
-            text-align: center;
+            padding: 12px;
+            background-color: #2563eb;
+            color: #ffffff;
             text-decoration: none;
-            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 8px;
+            transition: background-color 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
         }
 
-        .btn:hover {
-            background: #2563eb;
+        .btn-download:hover {
+            background-color: #1d4ed8;
+            box-shadow: 0 6px 16px rgba(37, 99, 235, 0.4);
         }
 
-        .btn-disabled {
-            background: rgba(255, 255, 255, 0.05);
-            color: rgba(255, 255, 255, 0.3);
-            cursor: not-allowed;
+        .btn-firefox {
+            background-color: #ea580c;
+            box-shadow: 0 4px 12px rgba(234, 88, 12, 0.25);
         }
 
-        .file-input {
-            display: none;
+        .btn-firefox:hover {
+            background-color: #c2410c;
+            box-shadow: 0 6px 16px rgba(234, 88, 12, 0.4);
         }
 
-        .import-label {
-            display: block;
-            text-align: center;
-            padding: 10px;
-            border: 1px dashed rgba(255, 255, 255, 0.2);
-            border-radius: 12px;
-            font-size: 0.85rem;
-            color: var(--accent);
-            cursor: pointer;
-            margin-bottom: 12px;
-            transition: border-color 0.2s ease;
-        }
-
-        .import-label:hover {
-            border-color: var(--primary);
-        }
-
+        /* Footer */
         footer {
-            margin-top: auto;
-            padding: 30px;
-            color: rgba(255, 255, 255, 0.3);
-            font-size: 0.85rem;
+            color: #475569;
+            font-size: 12px;
+            padding: 20px 0;
+            text-align: center;
         }
     </style>
 </head>
@@ -216,83 +187,53 @@
 
     <header>
         <div class="logo">NEW SYSTEM</div>
-        <div class="badge">OS8 ECOSYSTEM</div>
+        <div class="badge-top">OS8 ECOSYSTEM</div>
     </header>
 
-    <section class="hero">
+    <div class="hero">
         <h1>Szybkie. Proste. Niezawodne.</h1>
         <p>Ekskluzywne oprogramowanie użytkowe nowej generacji. Pobieraj bezpośrednio z oficjalnego źródła.</p>
-    </section>
+    </div>
 
-    <main class="container">
-        
-        <article class="card">
+    <div class="cards-container">
+        <!-- Karta 1: Stan USB - os8 -->
+        <div class="card">
             <div>
                 <div class="card-icon">💾</div>
-                <h2>Stan USB — os8</h2>
-                <p>Szybki skaner urządzeń przenośnych. Analizuje pojemność, zajęte oraz wolne miejsce na podłączonych pendrive'ach.</p>
-            </div>
-            <div>
-                <div class="card-meta">
-                    <span>Wersja: 1.0</span>
-                    <span>•</span>
-                    <span>Format: .EXE</span>
+                <div class="card-title">Stan USB — os8</div>
+                <div class="card-desc">
+                    Szybki skaner urządzeń przenośnych. Analizuje pojemność, zajęte oraz wolne miejsce na podłączonych pendrive'ach.
                 </div>
-                
-                <label for="upload-1" class="import-label" id="label-1">Zaimportuj plik .exe</label>
-                <input type="file" id="upload-1" class="file-input" accept=".exe" onchange="handleFileSelect(event, 1)">
-                
-                <a id="btn-1" class="btn btn-disabled">Brak pliku do pobrania</a>
-            </div>
-        </article>
-
-        <article class="card">
-            <div>
-                <div class="card-icon">⚡</div>
-                <h2>Clean System — os8</h2>
-                <p>Optymalizator przestrzeni dyskowej. Usuwa pliki tymczasowe oraz pamięć podręczną systemu w kilka sekund.</p>
-            </div>
-            <div>
                 <div class="card-meta">
-                    <span>Wersja: 1.0</span>
-                    <span>•</span>
-                    <span>Format: .EXE</span>
+                    <span>Wersja: 1.0</span> • <span>Format: .EXE</span>
                 </div>
-                
-                <label for="upload-2" class="import-label" id="label-2">Zaimportuj plik .exe</label>
-                <input type="file" id="upload-2" class="file-input" accept=".exe" onchange="handleFileSelect(event, 2)">
-                
-                <a id="btn-2" class="btn btn-disabled">Brak pliku do pobrania</a>
             </div>
-        </article>
+            <a href="https://1drv.ms/u/c/eaaad11874e96a60/IQB1j9qD3UeFSKSnASPx7XKEAXHh6YBF1QyrAMxzVW0cDF4?e=eeaYmw" target="_blank" rel="noopener noreferrer" class="btn-download">
+                Pobierz program (.exe)
+            </a>
+        </div>
 
-    </main>
+        <!-- Karta 2: Monitor Błędów Sieciowych (Firefox) -->
+        <div class="card">
+            <div>
+                <div class="card-icon">🦊</div>
+                <div class="card-title">Monitor Błędów Sieciowych</div>
+                <div class="card-desc">
+                    Oficjalne rozszerzenie dla przeglądarki Mozilla Firefox. Monitoruje i analizuje połączenia oraz błędy sieciowe w czasie rzeczywistym.
+                </div>
+                <div class="card-meta">
+                    <span>Wersja: 1.0</span> • <span>Format: Wtyczka Firefox</span>
+                </div>
+            </div>
+            <a href="https://addons.mozilla.org/pl/firefox/addon/monitor-b%C5%82%C4%99d%C3%B3w-sieciowych/" target="_blank" rel="noopener noreferrer" class="btn-download btn-firefox">
+                Pobierz z Mozilla Add-ons
+            </a>
+        </div>
+    </div>
 
     <footer>
-        &copy; 2026 NEW SYSTEM os8. Wszystkie prawa zastrzeżone.
+        © 2026 NEW SYSTEM os8. Wszystkie prawa zastrzeżone.
     </footer>
 
-    <script>
-        // Logika importowania i pobierania plików .exe bezpośrednio ze strony
-        function handleFileSelect(event, cardId) {
-            const file = event.target.files[0];
-            if (file) {
-                const objectUrl = URL.createObjectURL(file);
-                const downloadBtn = document.getElementById(`btn-${cardId}`);
-                const label = document.getElementById(`label-${cardId}`);
-
-                // Aktualizacja przycisku pobierania
-                downloadBtn.href = objectUrl;
-                downloadBtn.download = file.name;
-                downloadBtn.textContent = `Pobierz (${file.name})`;
-                downloadBtn.classList.remove('btn-disabled');
-
-                // Podmiana etykiety
-                label.textContent = `✓ Zaimportowano: ${file.name}`;
-                label.style.borderColor = "#10b981";
-                label.style.color = "#10b981";
-            }
-        }
-    </script>
 </body>
 </html>

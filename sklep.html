@@ -1,65 +1,298 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Zamów Miniaturkę</title>
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-    body { background-color: #0f172a; color: #f8fafc; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
-    .form-card { background: #1e293b; border: 1px solid #334155; border-radius: 16px; padding: 25px; width: 100%; max-width: 480px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
-    h2 { margin-bottom: 8px; text-align: center; color: #38bdf8; }
-    p.sub { color: #94a3b8; font-size: 0.9rem; text-align: center; margin-bottom: 20px; }
-    .form-group { margin-bottom: 15px; }
-    label { display: block; font-size: 0.85rem; color: #94a3b8; margin-bottom: 6px; }
-    input[type="text"], input[type="email"], select, textarea { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #334155; background: #0f172a; color: #f8fafc; outline: none; font-size: 0.95rem; }
-    input[type="file"] { width: 100%; padding: 8px; border-radius: 8px; border: 1px dashed #334155; background: #0f172a; color: #94a3b8; font-size: 0.85rem; cursor: pointer; }
-    textarea { resize: vertical; min-height: 100px; }
-    button { width: 100%; background: #2563eb; color: white; border: none; padding: 12px; border-radius: 8px; font-weight: bold; font-size: 1rem; cursor: pointer; transition: background 0.2s; margin-top: 10px; }
-    button:hover { background: #1d4ed8; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEW SYSTEM — Official Ecosystem</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0c10;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --primary: #3b82f6;
+            --primary-glow: rgba(59, 130, 246, 0.35);
+            --accent: #60a5fa;
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(37, 99, 235, 0.08) 0%, transparent 40%);
+        }
+
+        /* --- HEADER --- */
+        header {
+            width: 100%;
+            max-width: 1200px;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-weight: 800;
+            font-size: 1.4rem;
+            letter-spacing: 2px;
+            background: linear-gradient(135deg, #fff 0%, #94a3b8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .badge {
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            color: var(--accent);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        /* --- HERO --- */
+        .hero {
+            text-align: center;
+            margin: 40px 20px 60px;
+            max-width: 700px;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 16px;
+            line-height: 1.2;
+            letter-spacing: -1px;
+        }
+
+        .hero p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        /* --- PRODUCTS GRID --- */
+        .container {
+            width: 100%;
+            max-width: 1000px;
+            padding: 0 20px 80px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        /* --- PRODUCT CARD WITH HOVER ANIMATION --- */
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 32px;
+            backdrop-filter: blur(12px);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            /* Płynna animacja podnoszenia */
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+                        box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                        border-color 0.4s ease;
+        }
+
+        /* Efekt podniesienia i światła po najechaniu */
+        .card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(59, 130, 246, 0.4);
+            box-shadow: 0 20px 40px -15px var(--primary-glow);
+        }
+
+        .card-icon {
+            width: 56px;
+            height: 56px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 24px;
+        }
+
+        .card h2 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 24px;
+        }
+
+        .card-meta {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.4);
+            margin-bottom: 20px;
+            display: flex;
+            gap: 12px;
+        }
+
+        /* Buttons & Import Area */
+        .btn {
+            width: 100%;
+            padding: 14px;
+            border-radius: 12px;
+            border: none;
+            background: var(--primary);
+            color: white;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: background 0.2s ease, opacity 0.2s ease;
+            text-align: center;
+            text-decoration: none;
+            display: block;
+        }
+
+        .btn:hover {
+            background: #2563eb;
+        }
+
+        .btn-disabled {
+            background: rgba(255, 255, 255, 0.05);
+            color: rgba(255, 255, 255, 0.3);
+            cursor: not-allowed;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .import-label {
+            display: block;
+            text-align: center;
+            padding: 10px;
+            border: 1px dashed rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            font-size: 0.85rem;
+            color: var(--accent);
+            cursor: pointer;
+            margin-bottom: 12px;
+            transition: border-color 0.2s ease;
+        }
+
+        .import-label:hover {
+            border-color: var(--primary);
+        }
+
+        footer {
+            margin-top: auto;
+            padding: 30px;
+            color: rgba(255, 255, 255, 0.3);
+            font-size: 0.85rem;
+        }
+    </style>
 </head>
 <body>
 
-  <div class="form-card">
-    <h2>Formularz Zamówienia</h2>
-    <p class="sub">Wypełnij formularz – wiadomość trafi bezpośrednio na mój telefon.</p>
+    <header>
+        <div class="logo">NEW SYSTEM</div>
+        <div class="badge">OS8 ECOSYSTEM</div>
+    </header>
 
-    <!-- Zintegrowany Formspree wysyłający na serwerw45@proton.me -->
-    <form action="https://formspree.io/f/serwerw45@proton.me" method="POST" enctype="multipart/form-data">
-      
-      <div class="form-group">
-        <label for="nickname">Twoja nazwa / Nick Discord:</label>
-        <input type="text" id="nickname" name="Nick_Klienta" placeholder="np. JanKowalski#1234" required>
-      </div>
+    <section class="hero">
+        <h1>Szybkie. Proste. Niezawodne.</h1>
+        <p>Ekskluzywne oprogramowanie użytkowe nowej generacji. Pobieraj bezpośrednio z oficjalnego źródła.</p>
+    </section>
 
-      <div class="form-group">
-        <label for="package">Wybierz pakiet:</label>
-        <select id="package" name="Pakiet">
-          <option value="1 miniatura (15 zł)">1 miniatura - 15 zł</option>
-          <option value="2 miniatury (20 zł)">2 miniatury - 20 zł</option>
-          <option value="Niestandardowa ilość">Niestandardowa ilość</option>
-        </select>
-      </div>
+    <main class="container">
+        
+        <article class="card">
+            <div>
+                <div class="card-icon">💾</div>
+                <h2>Stan USB — os8</h2>
+                <p>Szybki skaner urządzeń przenośnych. Analizuje pojemność, zajęte oraz wolne miejsce na podłączonych pendrive'ach.</p>
+            </div>
+            <div>
+                <div class="card-meta">
+                    <span>Wersja: 1.0</span>
+                    <span>•</span>
+                    <span>Format: .EXE</span>
+                </div>
+                
+                <label for="upload-1" class="import-label" id="label-1">Zaimportuj plik .exe</label>
+                <input type="file" id="upload-1" class="file-input" accept=".exe" onchange="handleFileSelect(event, 1)">
+                
+                <a id="btn-1" class="btn btn-disabled">Brak pliku do pobrania</a>
+            </div>
+        </article>
 
-      <div class="form-group">
-        <label for="description">Opisz swój pomysł i styl miniatury:</label>
-        <textarea id="description" name="Opis_Zamowienia" placeholder="Opisz jak najdokładniej o czym ma być film, jakie napisy umieścić..." required></textarea>
-      </div>
+        <article class="card">
+            <div>
+                <div class="card-icon">⚡</div>
+                <h2>Clean System — os8</h2>
+                <p>Optymalizator przestrzeni dyskowej. Usuwa pliki tymczasowe oraz pamięć podręczną systemu w kilka sekund.</p>
+            </div>
+            <div>
+                <div class="card-meta">
+                    <span>Wersja: 1.0</span>
+                    <span>•</span>
+                    <span>Format: .EXE</span>
+                </div>
+                
+                <label for="upload-2" class="import-label" id="label-2">Zaimportuj plik .exe</label>
+                <input type="file" id="upload-2" class="file-input" accept=".exe" onchange="handleFileSelect(event, 2)">
+                
+                <a id="btn-2" class="btn btn-disabled">Brak pliku do pobrania</a>
+            </div>
+        </article>
 
-      <div class="form-group">
-        <label for="file">Dodaj materiały / podgląd (opcjonalnie):</label>
-        <input type="file" id="file" name="Zalacznik">
-      </div>
+    </main>
 
-      <div class="form-group">
-        <label for="contact">Twój e-mail do kontaktu z Tobą:</label>
-        <input type="email" id="contact" name="Email_Klienta" placeholder="twoj@email.com" required>
-      </div>
+    <footer>
+        &copy; 2026 NEW SYSTEM os8. Wszystkie prawa zastrzeżone.
+    </footer>
 
-      <button type="submit">Wyślij zamówienie</button>
-    </form>
-  </div>
+    <script>
+        // Logika importowania i pobierania plików .exe bezpośrednio ze strony
+        function handleFileSelect(event, cardId) {
+            const file = event.target.files[0];
+            if (file) {
+                const objectUrl = URL.createObjectURL(file);
+                const downloadBtn = document.getElementById(`btn-${cardId}`);
+                const label = document.getElementById(`label-${cardId}`);
 
+                // Aktualizacja przycisku pobierania
+                downloadBtn.href = objectUrl;
+                downloadBtn.download = file.name;
+                downloadBtn.textContent = `Pobierz (${file.name})`;
+                downloadBtn.classList.remove('btn-disabled');
+
+                // Podmiana etykiety
+                label.textContent = `✓ Zaimportowano: ${file.name}`;
+                label.style.borderColor = "#10b981";
+                label.style.color = "#10b981";
+            }
+        }
+    </script>
 </body>
 </html>
